@@ -42,6 +42,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\build\executable\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\build\intermediate\$(Configuration)\</IntDir>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -62,6 +63,10 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
+    <CustomBuildStep>
+      <Command>copy "$(SolutionDir)\audio-puzzle\SDL.dll" "$(SolutionDir)..\build\executable\$(Configuration)\\SDL.dll"</Command>
+      <Outputs>SDL.dll</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
