@@ -46,7 +46,8 @@ int main(int argc, char **argv)
 
 		bool done = false;
 
-		PlaySound("resources/test.wav", LEFT);
+		PlaySound("resources/test_L.wav");
+		PlaySound("resources/test_R.wav");
 
 		while(!done) {
 			// Wait until the window is quit

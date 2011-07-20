@@ -51,7 +51,7 @@ void MixAudio(void *unused, Uint8 *stream, int len)
     }
 }
 
-void PlaySound(char *file, int ear)
+void PlaySound(char *file)
 {
     int index;
     SDL_AudioSpec wave;
