@@ -1,6 +1,13 @@
 #include <sdl/SDL_audio.h>
+#include <sdl/SDL_mixer.h>
 
 void AudioInit();
 void AudioShutdown();
-void MixAudio(void*, Uint8*, int);
-void PlaySound(char*);
+void PlayAudio(char*, int, int);
+
+enum ear
+{
+	LEFT,
+	RIGHT,
+	BOTH
+};

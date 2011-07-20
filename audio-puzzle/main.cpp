@@ -46,8 +46,7 @@ int main(int argc, char **argv)
 
 		bool done = false;
 
-		PlaySound("resources/test_L.wav");
-		PlaySound("resources/test_R.wav");
+		PlayAudio("resources/test.wav", RIGHT, 0);
 
 		while(!done) {
 			// Wait until the window is quit
@@ -68,7 +67,6 @@ int main(int argc, char **argv)
 	// Otherwise print error info
 	else
 	{
-
 		// Get and output the filename
 		TCHAR s[100];
 		DWORD a = GetCurrentDirectory(100, s);
@@ -76,8 +74,6 @@ int main(int argc, char **argv)
 		char * error = IMG_GetError();
 
 		OutputDebugString(LPCWSTR(IMG_GetError()));
-
-
 	}
 
 	// Quit

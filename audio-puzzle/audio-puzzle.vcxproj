@@ -59,15 +59,17 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>msvcrt.lib;msvcmrt.lib;opengl32.lib;glu32.lib;sdl.lib;sdlmain.lib;sdl_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>msvcrt.lib;msvcmrt.lib;opengl32.lib;glu32.lib;sdl.lib;sdlmain.lib;sdl_image.lib;sdl_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
     <CustomBuildStep>
       <Command>copy "$(SolutionDir)\audio-puzzle\SDL.dll" "$(SolutionDir)..\build\executable\$(Configuration)\\SDL.dll"
 copy "$(SolutionDir)\audio-puzzle\SDL_image.dll" "$(SolutionDir)..\build\executable\$(Configuration)\\SDL_image.dll"
-copy "$(SolutionDir)\audio-puzzle\jpeg.dll" "$(SolutionDir)..\build\executable\$(Configuration)\\jpeg.dll"</Command>
-      <Outputs>SDL.dll;SDL_image.dll;jpeg.dll</Outputs>
+copy "$(SolutionDir)\audio-puzzle\jpeg.dll" "$(SolutionDir)..\build\executable\$(Configuration)\\jpeg.dll"
+copy "$(SolutionDir)\audio-puzzle\SDL_mixer.dll" "$(SolutionDir)..\build\executable\$(Configuration)\\SDL_mixer.dll"
+copy "$(SolutionDir)\audio-puzzle\smpeg.dll" "$(SolutionDir)..\build\executable\$(Configuration)\\smpeg.dll"</Command>
+      <Outputs>SDL.dll;SDL_image.dll;jpeg.dll;SDL_mixer.dll;smpeg.dll</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
