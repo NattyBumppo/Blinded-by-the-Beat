@@ -2,13 +2,13 @@
 //
 
 #include "stdafx.h"
-#include <windows.h>
 #include <gl/gl.h>
 #include <gl/glu.h>
 #include <sdl/sdl.h>
 #include <sdl/SDL_image.h>
+#include <sdl/SDL_audio.h>
 #include "audio.h"
-#include <wchar.h>
+
 
 // This is a display surface to represent the window.
 SDL_Surface *screen;
@@ -18,8 +18,10 @@ SDL_Event event;
 int main(int argc, char **argv)
 {
 	
+
 	// Initialize SDL library for video and audio subsystems
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+	AudioInit();
 
 	// Load image from file
 	SDL_Surface *image = IMG_Load("resources/main_screen.jpg");
@@ -44,6 +46,8 @@ int main(int argc, char **argv)
 
 		bool done = false;
 
+		PlaySound("resources/test.wav", LEFT);
+
 		while(!done) {
 			// Wait until the window is quit
 			while(SDL_PollEvent(&event)) {
@@ -57,6 +61,7 @@ int main(int argc, char **argv)
 
 			// Update the screen buffer
 			SDL_Flip(screen);
+
 		}
 	}
 	// Otherwise print error info
@@ -74,7 +79,8 @@ int main(int argc, char **argv)
 
 	}
 
-	// Quit SDL library
+	// Quit
+	AudioShutdown();
 	SDL_Quit();
 	
 	return 0;

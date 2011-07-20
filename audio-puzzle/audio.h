@@ -1,0 +1,11 @@
+#include <sdl/SDL_audio.h>
+
+void AudioInit();
+void AudioShutdown();
+void MixAudio(void*, Uint8*, int);
+void PlaySound(char*, int);
+
+enum ear {
+	LEFT,
+	RIGHT
+};
