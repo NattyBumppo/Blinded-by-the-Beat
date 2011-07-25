@@ -15,9 +15,30 @@ SDL_Surface *screen;
 
 SDL_Event event;
 
+int blocks[6][6] =
+{
+	{1, 2, 3, 4, 5, 6},
+	{1, 2, 3, 4, 5, 6},
+	{1, 2, 3, 4, 5, 6},
+	{1, 2, 3, 4, 5, 6},
+	{1, 2, 3, 4, 5, 6},
+	{1, 2, 3, 4, 5, 6}
+};
+
 int main(int argc, char **argv)
 {
 	
+	struct cursor_loc
+	{
+		int x;
+		int y;
+			
+	};
+
+	struct cursor_loc c;
+	c.x = 0;
+	c.y = 3;
+
 
 	// Initialize SDL library for video and audio subsystems
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
@@ -46,18 +67,85 @@ int main(int argc, char **argv)
 
 		bool done = false;
 
-		PlayAudio("resources/test.wav", RIGHT, 0);
-
 		while(!done) {
-			// Wait until the window is quit
-			while(SDL_PollEvent(&event)) {
-				if (event.type == SDL_QUIT) {
-					done = true;
+			
+			// Grab keyboard/mouse input
+			while(SDL_PollEvent(&event))
+			{
+				switch(event.type)
+				{
+ 				  case SDL_QUIT:
+					  done = true;
+					  break;
+				  // Handle keyboard input
+				  case SDL_KEYDOWN:
+					  switch(event.key.keysym.sym)
+					  {
+					    case SDLK_LEFT:
+						case SDLK_a:
+							// move cursor left
+							if(c.x != 0)
+							{
+								c.x--;
+							}
+							else
+							{
+								PlayAudio("resources/boop.wav", LEFT, 3);
+							}
+
+							break;
+						case SDLK_RIGHT:
+						case SDLK_d:
+							// move cursor right
+							if(c.x != 4)
+							{
+								c.x++;
+							}
+							else
+							{
+								PlayAudio("resources/boop.wav", RIGHT, 3);
+							}
+							break;
+						case SDLK_UP:
+						case SDLK_w:
+							// move cursor up
+							if(c.y != 0)
+							{
+								c.y--;
+							}
+							else
+							{
+								PlayAudio("resources/boop.wav", BOTH, 3);
+							}
+
+							break;
+						case SDLK_DOWN:
+						case SDLK_s:
+							// move cursor down
+							if(c.y != 5)
+							{
+								c.y++;
+							}
+							else
+							{
+								PlayAudio("resources/boop.wav", BOTH, 3);
+							}
+							break;
+						case SDLK_SPACE:
+							// switch blocks at cursor
+							PlayAudio("resources/ding.wav", BOTH, 2);
+							int temp = blocks[c.x][c.y];
+							blocks[c.x][c.y] = blocks[c.x + 1][c.y];
+							blocks[c.x + 1][c.y] = temp;
+							break;
+					  }
 				}
+				
+					
 			}
 
-			// Fill the screen with black color
-			//SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0, 0, 0));
+			// Check cursor location and produce appropriate sounds
+			PlayBlockSounds(blocks[c.x][c.y], blocks[c.x + 1][c.y]);
 
 			// Update the screen buffer
 			SDL_Flip(screen);

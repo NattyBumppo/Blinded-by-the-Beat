@@ -9,8 +9,6 @@ void AudioInit()
 		{
 			char * error = Mix_GetError();
 		}
-
-
 }
 
 void AudioShutdown()
@@ -47,6 +45,14 @@ void PlayAudio(char* filename, int ear_channel, int num_channel)
 	}
 
 	Mix_PlayChannel(num_channel, sample, 0);
+
+
+}
+
+void PlayBlockSounds(int left, int right)
+{
+
+
 
 
 }

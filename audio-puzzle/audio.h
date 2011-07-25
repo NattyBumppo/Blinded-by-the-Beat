@@ -4,6 +4,7 @@
 void AudioInit();
 void AudioShutdown();
 void PlayAudio(char*, int, int);
+void PlayBlockSounds(int, int);
 
 enum ear
 {
