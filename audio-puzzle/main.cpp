@@ -17,12 +17,12 @@ SDL_Event event;
 
 int blocks[6][6] =
 {
-	{1, 2, 3, 4, 5, 6},
-	{1, 2, 3, 4, 5, 6},
-	{1, 2, 3, 4, 5, 6},
-	{1, 2, 3, 4, 5, 6},
-	{1, 2, 3, 4, 5, 6},
-	{1, 2, 3, 4, 5, 6}
+	{0, 1, 2, 3, 4, 5},
+	{0, 1, 2, 3, 4, 5},
+	{0, 1, 2, 3, 4, 5},
+	{0, 1, 2, 3, 4, 5},
+	{0, 1, 2, 3, 4, 5},
+	{0, 1, 2, 3, 4, 5}
 };
 
 int main(int argc, char **argv)
@@ -87,10 +87,13 @@ int main(int argc, char **argv)
 							if(c.x != 0)
 							{
 								c.x--;
+								// End currently playing block noise
+								Mix_HaltChannel(0);
+								Mix_HaltChannel(1);
 							}
 							else
 							{
-								PlayAudio("resources/boop.wav", LEFT, 3);
+								PlayAudio("resources/boop.wav", LEFT, 3, 0);
 							}
 
 							break;
@@ -100,10 +103,13 @@ int main(int argc, char **argv)
 							if(c.x != 4)
 							{
 								c.x++;
+								// End currently playing block noise
+								Mix_HaltChannel(0);
+								Mix_HaltChannel(1);
 							}
 							else
 							{
-								PlayAudio("resources/boop.wav", RIGHT, 3);
+								PlayAudio("resources/boop.wav", RIGHT, 3, 0);
 							}
 							break;
 						case SDLK_UP:
@@ -112,10 +118,13 @@ int main(int argc, char **argv)
 							if(c.y != 0)
 							{
 								c.y--;
+								// End currently playing block noise
+								Mix_HaltChannel(0);
+								Mix_HaltChannel(1);
 							}
 							else
 							{
-								PlayAudio("resources/boop.wav", BOTH, 3);
+								PlayAudio("resources/boop.wav", BOTH, 3, 0);
 							}
 
 							break;
@@ -124,19 +133,33 @@ int main(int argc, char **argv)
 							// move cursor down
 							if(c.y != 5)
 							{
+								
 								c.y++;
+								// End currently playing block noise
+								Mix_HaltChannel(0);
+								Mix_HaltChannel(1);
 							}
 							else
 							{
-								PlayAudio("resources/boop.wav", BOTH, 3);
+								PlayAudio("resources/boop.wav", BOTH, 3, 0);
 							}
 							break;
 						case SDLK_SPACE:
 							// switch blocks at cursor
-							PlayAudio("resources/ding.wav", BOTH, 2);
-							int temp = blocks[c.x][c.y];
-							blocks[c.x][c.y] = blocks[c.x + 1][c.y];
-							blocks[c.x + 1][c.y] = temp;
+							
+							// Play switch sound
+							//PlayAudio("resources/ding.wav", BOTH, 2, 0);
+							
+							// End currently playing block noise
+							Mix_HaltChannel(0);
+							Mix_HaltChannel(1);
+							{
+								int temp = blocks[c.y][c.x];
+								blocks[c.y][c.x] = blocks[c.y][c.x + 1];
+								blocks[c.y][c.x + 1] = temp;
+							}
+							break;
+						default:
 							break;
 					  }
 				}
@@ -145,7 +168,8 @@ int main(int argc, char **argv)
 			}
 
 			// Check cursor location and produce appropriate sounds
-			PlayBlockSounds(blocks[c.x][c.y], blocks[c.x + 1][c.y]);
+			PlayBlockSound(blocks[c.y][c.x], LEFT);
+			PlayBlockSound(blocks[c.y][c.x + 1], RIGHT);
 
 			// Update the screen buffer
 			SDL_Flip(screen);
